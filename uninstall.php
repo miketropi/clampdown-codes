@@ -1,0 +1,5 @@
+<?php 
+/**
+ * Uninstall func here!
+ */
+
