@@ -23,4 +23,4 @@ function clampdown_codes_active_hook() {
 	maybe_create_table($table_name, $sql);
 }
 
-register_activation_hook(__FILE__, 'clampdown_codes_active_hook');
+register_activation_hook(CGC_FILE_URL, 'clampdown_codes_active_hook');

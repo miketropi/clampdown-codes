@@ -10,4 +10,4 @@ function clampdown_codes_remove_database() {
   $wpdb->query($sql);
 }
 
-register_uninstall_hook(__FILE__, 'clampdown_codes_remove_database');
+register_uninstall_hook(CGC_FILE_URL, 'clampdown_codes_remove_database');

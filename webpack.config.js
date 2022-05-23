@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const conf = {
   entry: {
     fe: './src/main.js',
+    be: './src/admin.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
