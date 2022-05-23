@@ -26,4 +26,7 @@
   require(CGC_DIR . '/inc/helpers.php');
   require(CGC_DIR . '/inc/ajax.php');
   require(CGC_DIR . '/inc/hooks.php');
+
+  require(CGC_DIR . '/active.php');
+  require(CGC_DIR . '/uninstall.php');
 }
