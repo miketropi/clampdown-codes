@@ -1,10 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select, Alert } from 'antd';
 import { __ } from '@wordpress/i18n';
+import { generateCode } from '../lib/lib';
+import { useAdminApp } from '../context/AppAdminContext';
 
 export default ({ visible, onCreate, onCancel }) => {
+  const { message, setMessage } = useAdminApp();
   const [form] = Form.useForm();
+
+  const autoGenerateCode = () => {
+    console.log(generateCode(6))
+    form.setFieldsValue({
+      code: generateCode(6),
+    })
+  }
+
   return <Modal
     visible={visible}
     title={ __('Create a new Code', 'cgc') }
@@ -14,14 +25,24 @@ export default ({ visible, onCreate, onCancel }) => {
     onOk={() => {
       form
         .validateFields()
-        .then((values) => {
-          form.resetFields();
-          onCreate(values);
+        .then(async (values) => {
+          const result = await onCreate(values);
+          if(result.successfull == true) {
+            form.resetFields();
+          } else {
+
+          }
         })
         .catch((info) => {
           console.log('Validate Failed:', info);
         });
     }} >
+
+    {
+      message.show == true &&
+      <Alert message={ message.message } type={ message.type } style={{ marginBottom: '2em' }}></Alert>
+    }
+
     <Form
       form={ form }
       layout="vertical"
@@ -30,15 +51,27 @@ export default ({ visible, onCreate, onCancel }) => {
         modifier: 'public',
       }} >
       <Form.Item
-        name={ __('code', 'cgc') }
         label={ __('Enter Code', 'cgc') }
-        rules={[
-          {
-            required: true,
-            message: __('Please input the code!', 'cgc'),
-          },
-        ]} >
-        <Input placeholder={ __('Enter your code', 'cgc') } />
+        >
+        <Input.Group compact className="custom-field-group-inline">
+          <Form.Item
+            noStyle={ true }
+            name={ __('code', 'cgc') }
+            rules={[
+              {
+                required: true,
+                message: __('Please input the code!', 'cgc'),
+              },
+            ]}
+            style={{ width: '100%' }}
+            >
+            <Input
+              style={{ borderRadius: '1px', paddingTop: '1px', paddingBottom: '1px' }}
+              placeholder={ __('Enter your code', 'cgc') }
+              />
+          </Form.Item>
+          <Button type="primary" onClick={ autoGenerateCode }>{ __('Generate Code', 'cgc') }</Button>
+        </Input.Group>
       </Form.Item>
       <Form.Item
         name={ __('group', 'cgc') }

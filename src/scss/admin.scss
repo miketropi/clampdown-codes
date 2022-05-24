@@ -1,2 +1,6 @@
 @import './variables';
 @import './general';
+
+.custom-field-group-inline {
+  display: flex !important;
+}
