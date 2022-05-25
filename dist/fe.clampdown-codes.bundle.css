@@ -15,3 +15,26 @@
   line-height: normal;
   font-weight: bold;
 }
+.clampdown-codes-donwload-form form button[type=submit].__ajax-handling {
+  pointer-events: none;
+  opacity: 0.4;
+}
+.clampdown-codes-donwload-form__result {
+  margin-top: 2em;
+}
+.clampdown-codes-donwload-form__result .__thumb {
+  width: 300px;
+  max-width: 100%;
+  margin: 1em auto;
+}
+.clampdown-codes-donwload-form__result .button {
+  width: 300px;
+  max-width: 100%;
+}
+
+.clampdown-codes-alert__success {
+  color: #327212;
+}
+.clampdown-codes-alert__error {
+  color: #db3032;
+}

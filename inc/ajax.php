@@ -75,3 +75,12 @@ function clampdown_codes_ajax_update_download_config() {
 
 add_action('wp_ajax_clampdown_codes_ajax_update_download_config', 'clampdown_codes_ajax_update_download_config');
 add_action('wp_ajax_nopriv_clampdown_codes_ajax_update_download_config', 'clampdown_codes_ajax_update_download_config');
+
+function clampdown_codes_ajax_validate() {
+  extract($_POST);
+  $result = clampdown_codes_validate_progress($data['code'], $data['group']);
+  wp_send_json($result);
+}
+
+add_action('wp_ajax_clampdown_codes_ajax_validate', 'clampdown_codes_ajax_validate');
+add_action('wp_ajax_nopriv_clampdown_codes_ajax_validate', 'clampdown_codes_ajax_validate');

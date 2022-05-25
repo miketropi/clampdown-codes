@@ -41,7 +41,7 @@ class ClampdownCodesQuery {
     return $results;
   }
 
-  public function getCode($code = 'null') {
+  public function getCode($code = '') {
     $q = sprintf('SELECT * FROM `%s` WHERE `code`=\'%s\'', $this->table_name, $code);
     $result = @$this->_wpdb->get_row($this->_wpdb->prepare($q, []), 'ARRAY_A');
     return $result;
@@ -86,6 +86,12 @@ class ClampdownCodesQuery {
     }
 
     return $results;
+  }
+
+  public function validate($code = '', $group = '') {
+    $q = sprintf('SELECT * FROM `%s` WHERE `code`=\'%s\' AND `group`=\'%s\'', $this->table_name, $code, $group);
+    $result = @$this->_wpdb->get_row($this->_wpdb->prepare($q, []), 'ARRAY_A');
+    return $result;
   }
 }
 

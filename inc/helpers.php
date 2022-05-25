@@ -17,3 +17,57 @@ function clampdown_codes_get_download_config() {
 function clampdown_codes_update_download_config($newConfig) {
   return update_option('clampdown_codes_download_config', $newConfig);
 }
+
+function clampdown_codes_validate($code = '', $group = '') {
+  global $clampdownCodesQuery;
+  $result = $clampdownCodesQuery->validate($code, $group);
+  return $result;
+}
+
+function clampdown_codes_get_file_download($group) {
+  $config = clampdown_codes_get_download_config();
+  $thumb_key = 'thumbnail_url_' . str_replace(' ', '_', $group);
+  $download_file_key = 'download_file_' . str_replace(' ', '_', $group);
+  
+  if(isset($config[$thumb_key]) && isset($config[$thumb_key])) {
+    return [$config[$thumb_key], $config[$thumb_key]];
+  }
+
+  return false;
+}
+
+function clampdown_codes_update_code_status_success($code) {
+
+}
+
+function clampdown_codes_validate_progress($code = '', $group = '') {
+  $result = clampdown_codes_validate($code, $group);
+
+  if(! $result) return [
+    'successful' => false,
+    'message' => __('Code invalid.', 'cgc')
+  ];
+
+  $downloadResult = clampdown_codes_get_file_download($result['group']);
+
+  if($downloadResult == false) return [
+    'successful' => false,
+    'message' => __('Download file unavailable.', 'cgc')
+  ];
+
+  list($thumb, $download) = $downloadResult;
+
+  return [
+    'successful' => true,
+    'message' => __('Click button to download, Thank you! 🖐️', 'cgc'),
+    'entry' => $result,
+    'download' => [
+      'thumb' => $thumb,
+      'download' => $download,
+    ]
+  ];
+}
+
+add_action('init', function() {
+  // var_dump(clampdown_codes_validate_progress('pnkB8g', 'Likepacific'));
+});
