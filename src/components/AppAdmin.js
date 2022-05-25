@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useAdminApp } from '../context/AppAdminContext';
 import styled from 'styled-components';
-import { PageHeader, Button, Table } from 'antd';
+import { PageHeader, Button, Badge, Row, Col } from 'antd';
 import AddCodeModalForm from './AddCodeModal';
 import CodesTable from './CodesTable';
 import DropdownMenu from './DropdownMenu';
+import DownloadFileConfig from './DownloadFileConfig';
 import { __ } from '@wordpress/i18n';
 
 const AppAdminContainer = styled.div`
-  width: 860px;
+  width: 1200px;
+  max-width: 90%;
   margin: 2em auto;
 
   .site-page-header {
     border: 1px solid rgb(235, 237, 240);
   }
 `
+
+const TitleWithBadge = ({ title, num }) => {
+  return <Badge count={ num }>
+    { title }
+  </Badge>
+}
 
 export default () => {
   const [visible, setVisible] = useState(false);
@@ -25,23 +33,30 @@ export default () => {
   }
 
   return <AppAdminContainer>
-    <PageHeader
-      className="site-page-header"
-      onBack={() => null}
-      title={ __('Clampdown Codes', 'cgc') }
-      subTitle={ __('List all', 'cgc') }
-      extra={[
-        <Button key="ADD_CODE" onClick={ e => { setVisible(true) } }>{ __('Add Code', 'cgc') }</Button>,
-        <Button key="DELETE_CODES" onClick={ deleteCodesHandle } type="primary" danger disabled={ (selectedRowKeys.length == 0 ? true : false) }>{ __('Delete Code(s)', 'cgc') }</Button>,
-        <DropdownMenu key="more" />,
-      ]}
-      style={{ marginBottom: '2em' }}
-    />
+    <Row gutter={ 48 }>
+      <Col span={ 18 }>
+        <PageHeader
+          className="site-page-header"
+          onBack={() => null}
+          title={ __('Clampdown Codes', 'cgc') }
+          subTitle={ __(`All codes (${ codes.length })`, 'cgc') }
+          extra={[
+            <Button key="ADD_CODE" onClick={ e => { setVisible(true) } }>{ __('Add Code', 'cgc') }</Button>,
+            <Button key="DELETE_CODES" onClick={ deleteCodesHandle } type="primary" danger disabled={ (selectedRowKeys.length == 0 ? true : false) }>{ __('Delete Code(s)', 'cgc') }</Button>,
+            <DropdownMenu key="more" />,
+          ]}
+          style={{ marginBottom: '2em' }}
+        />
 
-    {
-      codes.length > 0 &&
-      <CodesTable codes={ codes } />
-    }
+        {
+          codes.length > 0 &&
+          <CodesTable codes={ codes } />
+        }
+      </Col>
+      <Col span={ 6 }>
+        <DownloadFileConfig />
+      </Col>
+    </Row>
     
     <AddCodeModalForm 
       visible={ visible }

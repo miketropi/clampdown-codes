@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Table, Input, Tag, Typography, Button } from 'antd';
+import { Table, Input, Tag, Typography, Select } from 'antd';
 import { __ } from '@wordpress/i18n';
 import { useAdminApp } from '../context/AppAdminContext';
 
@@ -8,9 +8,16 @@ const CodesTableContainer = styled.div`
 
 `
 
+const FilterBarContainer = styled.div`
+  > * {
+    margin-right: 2em;
+  }
+`
+
 export default ({ codes }) => {
-  const { selectedRowKeys, setSelectedRowKeys } = useAdminApp();
+  const { selectedRowKeys, setSelectedRowKeys, group } = useAdminApp();
   const [search, setSearch] = useState('');
+  const [filterByGroup, setFilterByGroup] = useState('');
 
   const columns = [
     {
@@ -39,21 +46,11 @@ export default ({ codes }) => {
       dataIndex: 'time',
       key: 'time',
     },
-    {
-      title: 'MetaData',
-      dataIndex: 'metavalue',
-      key: 'metavalue',
-    },
     // {
-    //   title: 'Actions',
-    //   dataIndex: 'actions',
-    //   key: 'actions',
-    //   render: () => {
-    //     return <Fragment>
-    //       <Button type="primary" danger>{ __('Delete', 'cgc') }</Button>
-    //     </Fragment>
-    //   }
-    // },
+    //   title: 'MetaData',
+    //   dataIndex: 'metavalue',
+    //   key: 'metavalue',
+    // }
   ];
 
   const onChange = (selectedRowKeys, selectedRows) => {
@@ -70,18 +67,42 @@ export default ({ codes }) => {
   };
 
   return <CodesTableContainer>
-    <Input 
-      type="search" 
-      placeholder="Search code..."  
-      value={ search } 
-      onInput={ e => setSearch(e.target.value) }
-      style={{ borderRadius: '1px', marginBottom: '2em', width: '200px' }} />
+    <FilterBarContainer>
+      <Input 
+        type="search" 
+        placeholder="Search Code..."  
+        value={ search } 
+        onInput={ e => setSearch(e.target.value) }
+        style={{ borderRadius: '1px', marginBottom: '2em', width: '200px' }} />
+        
+      <Select 
+        placeholder={ __('Filter by Group', 'cgc') }
+        onChange={ val => setFilterByGroup(val) }
+        allowClear={ true }
+        style={{ width: '200px' }}>
+        {
+          group.map( g => <Select.Option value={ g } key={ g }>{ g }</Select.Option> )
+        }
+      </Select>
+    </FilterBarContainer>
+    
     <Table 
       rowSelection={ rowSelection } 
       columns={ columns } 
-      dataSource={ codes.filter( item => (item.code.indexOf(search) > -1) ) } 
+      dataSource={ codes.filter( item => {
+        return (filterByGroup ? item.group == filterByGroup : true);
+      } ).filter( item => {
+        return (item.code.indexOf(search) > -1)
+      } ) } 
       bordered 
-      pagination={{ defaultCurrent: 1, defaultPageSize: 10, total: codes.filter( item => (item.code.indexOf(search) > -1) ).length }} 
+      pagination={{ 
+        defaultCurrent: 1, 
+        defaultPageSize: 10, 
+        total: codes.filter( item => {
+          return (filterByGroup ? item.group == filterByGroup : true);
+        } ).filter( item => {
+          return (item.code.indexOf(search) > -1)
+        } ).length }} 
       onChange={ onChange } />
   </CodesTableContainer>
 }

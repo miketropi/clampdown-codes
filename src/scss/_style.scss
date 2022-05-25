@@ -1,0 +1,19 @@
+.clampdown-codes-donwload-form {
+  text-align: center;
+  padding: 3em;
+  background: #FAFAFA;
+  font-family: Arial, Helvetica, sans-serif;
+
+  form {
+
+    > * {
+      vertical-align: top;
+    }
+
+    button[type=submit] {
+      height: 54.89px;
+      line-height: normal;
+      font-weight: bold;
+    }
+  }
+}

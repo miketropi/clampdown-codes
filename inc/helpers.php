@@ -9,3 +9,11 @@ function clampdown_codes_generate_random_string($length = 6) {
   }
   return $randomString;
 }
+
+function clampdown_codes_get_download_config() {
+  return get_option('clampdown_codes_download_config', '');
+}
+
+function clampdown_codes_update_download_config($newConfig) {
+  return update_option('clampdown_codes_download_config', $newConfig);
+}

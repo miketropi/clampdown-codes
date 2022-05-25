@@ -30,3 +30,11 @@ export const deleteCodes = async (codes = []) => {
 export const autoGenerateCodes = async (number, group) => {
   return await appRequest('clampdown_codes_ajax_auto_generate_codes', { number, group });
 }
+
+export const getDownloadConfig = async () => {
+  return await appRequest('clampdown_codes_ajax_get_download_config', {});
+}
+
+export const updateDownloadConfig = async (config) => {
+  return await appRequest('clampdown_codes_ajax_update_download_config', { ...config });
+}

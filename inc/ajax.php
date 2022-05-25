@@ -61,3 +61,17 @@ function clampdown_codes_ajax_auto_generate_codes() {
 
 add_action('wp_ajax_clampdown_codes_ajax_auto_generate_codes', 'clampdown_codes_ajax_auto_generate_codes');
 add_action('wp_ajax_nopriv_clampdown_codes_ajax_auto_generate_codes', 'clampdown_codes_ajax_auto_generate_codes');
+
+function clampdown_codes_ajax_get_download_config() {
+  wp_send_json(clampdown_codes_get_download_config());
+}
+
+add_action('wp_ajax_clampdown_codes_ajax_get_download_config', 'clampdown_codes_ajax_get_download_config');
+add_action('wp_ajax_nopriv_clampdown_codes_ajax_get_download_config', 'clampdown_codes_ajax_get_download_config');
+
+function clampdown_codes_ajax_update_download_config() {
+  wp_send_json(clampdown_codes_update_download_config($_POST));
+}
+
+add_action('wp_ajax_clampdown_codes_ajax_update_download_config', 'clampdown_codes_ajax_update_download_config');
+add_action('wp_ajax_nopriv_clampdown_codes_ajax_update_download_config', 'clampdown_codes_ajax_update_download_config');

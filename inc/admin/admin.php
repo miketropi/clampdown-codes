@@ -26,7 +26,8 @@ function clampdown_coeds_register_menu_page_callback() {
 
 add_action('admin_init', function() {
   if(isset($_GET['dev'])) {
-    global $clampdownCodesQuery;
+    // global $clampdownCodesQuery;
     // var_dump($clampdownCodesQuery->autoGenerateCodes(30, 'Sameside'));
+    var_dump(clampdown_codes_get_download_config());
   }
 });

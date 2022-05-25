@@ -30,6 +30,11 @@
   require(CGC_DIR . '/inc/hooks.php');
   require(CGC_DIR . '/inc/admin/admin.php');
 
+  /**
+   * Shortcodes
+   */
+  require(CGC_DIR . '/inc/shortcodes/download-form.php');
+
   require(CGC_DIR . '/active.php');
   require(CGC_DIR . '/uninstall.php');
 }

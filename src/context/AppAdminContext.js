@@ -9,6 +9,7 @@ const AdminAppContext = createContext();
 const AdminAppProvider = ({ children }) => {
   const [codes, setCodes] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [group, setGroup] = useState(['Sameside', 'Likepacific', 'Glennchatten', 'Brutalplanet', 'Wanderlust', 'Morons', 'Auroras', 'La Guns']);
   const [message, setMessage] = useState({
     type: 'warning',
     mesasge: '...',
@@ -71,15 +72,15 @@ const AdminAppProvider = ({ children }) => {
     Modal.confirm({
       title: `Do you Want auto generate ${ num } codes in #${ group }?`,
       icon: <ExclamationCircleOutlined />,
-      content: '',
+      content: '💻 Feature Developing...',
       async onOk() {
-        const result = await autoGenerateCodes(num, group)
-        if(result.successfull == true) {
-          notification['success']({
-            message: 'Message',
-            description: result.message,
-          });
-        }
+        // const result = await autoGenerateCodes(num, group)
+        // if(result.successfull == true) {
+        //   notification['success']({
+        //     message: 'Message',
+        //     description: result.message, 
+        //   });
+        // }
       },
       onCancel() {
 
@@ -94,6 +95,7 @@ const AdminAppProvider = ({ children }) => {
     addCodeHandle,
     deleteCodesHandle,
     autoGenerateCodesHandle,
+    group, setGroup,
   };
 
   return <AdminAppContext.Provider value={ value }>
@@ -105,4 +107,4 @@ const useAdminApp = () => {
   return useContext(AdminAppContext)
 }
 
-export { AdminAppProvider, useAdminApp };
+export { AdminAppContext, AdminAppProvider, useAdminApp };
