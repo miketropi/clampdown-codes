@@ -23,6 +23,8 @@
   /**
    * Inc
    */
+  require(CGC_DIR . '/vendor/autoload.php');
+
   require(CGC_DIR . '/inc/query.php');
   require(CGC_DIR . '/inc/static.php');
   require(CGC_DIR . '/inc/helpers.php');

@@ -6,27 +6,34 @@ import { __ } from '@wordpress/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import { AdminAppContext } from '../context/AppAdminContext';
 
+const MenuStyleContainer = styled.div`
+  border: solid 1px #eee;
+`
+
 export const menu = () => {
-  return <AdminAppContext.Consumer>
-    {
-      ({ autoGenerateCodesHandle, group }) => {
-        const _group = [...group];
-        return <Menu
-          onClick={ ({ key }) => {
-            autoGenerateCodesHandle(30, key);
-          } }
-          items={ _group.map(g => {
-            return {
-              key: g,
-              label: (
-                <Button type="link" style={{ color: 'black' }} >{ __(`Auto generate 30 codes for #${ g }`, 'cgc') }</Button>
-              )
-            }
-          }) }
-        />
+  return <MenuStyleContainer>
+    <AdminAppContext.Consumer>
+      {
+        ({ autoGenerateCodesHandle, group }) => {
+          const _group = [...group];
+          return <Menu
+            onClick={ ({ key }) => {
+              autoGenerateCodesHandle(30, key);
+            } }
+            items={ _group.map(g => {
+              return {
+                key: g,
+                style: { borderBottom: 'solid 1px #eee' },
+                label: (
+                  <Button type="link" style={{ color: 'black' }} >{ __(`Auto generate 30 codes for #${ g }`, 'cgc') }</Button>
+                )
+              }
+            }) }
+          />
+        }
       }
-    }
-  </AdminAppContext.Consumer>
+    </AdminAppContext.Consumer>
+  </MenuStyleContainer>
 };
 
 export default () => {

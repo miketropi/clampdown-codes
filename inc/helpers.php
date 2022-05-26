@@ -1,4 +1,5 @@
 <?php 
+use League\Csv\Reader;
 
 function clampdown_codes_generate_random_string($length = 6) {
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -68,6 +69,16 @@ function clampdown_codes_validate_progress($code = '', $group = '') {
   ];
 }
 
+function clampdown_codes_read_csv_file_to_json($pathfile = '') {
+  $csv = Reader::createFromPath($pathfile, 'r');
+  $csv->setHeaderOffset(0);
+  // $header = $csv->getHeader(); //returns the CSV header record
+  $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
+  return json_encode($csv, JSON_PRETTY_PRINT);
+}
+
 add_action('init', function() {
-  // var_dump(clampdown_codes_validate_progress('pnkB8g', 'Likepacific'));
+  // $upload_dir = wp_upload_dir();
+  // $entry = clampdown_codes_read_csv_file_to_json($upload_dir['basedir'] . '/2022/05/SameSideCodes.csv');
+  // var_dump($entry);
 });
