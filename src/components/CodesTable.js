@@ -33,7 +33,7 @@ export default ({ codes }) => {
       dataIndex: 'available',
       key: 'available',
       render: (status) => {
-        return status === '1' ? <Tag color="#87d068">{ __('Avaiable', 'cgc') }</Tag> : <Tag color="rgb(61 207 99)">{ __('Unavailable', 'cgc') }</Tag>;
+        return status === '1' ? <Tag color="rgb(61 207 99)">{ __('Avaiable', 'cgc') }</Tag> : <Tag color="rgb(249 50 78)">{ __('Unavailable', 'cgc') }</Tag>;
       } 
     },
     {

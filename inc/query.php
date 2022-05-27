@@ -89,8 +89,18 @@ class ClampdownCodesQuery {
   }
 
   public function validate($code = '', $group = '') {
-    $q = sprintf('SELECT * FROM `%s` WHERE `code`=\'%s\' AND `group`=\'%s\'', $this->table_name, $code, $group);
+    $q = sprintf('SELECT * FROM `%s` WHERE `code`=\'%s\' AND `group`=\'%s\' AND `available`=1', $this->table_name, $code, $group);
     $result = @$this->_wpdb->get_row($this->_wpdb->prepare($q, []), 'ARRAY_A');
+    return $result;
+  }
+
+  public function updateAvailable($code = '', $status = 0) {
+    $result = $this->_wpdb->update($this->table_name, [
+      'available' => $status
+    ], [
+      'code' => $code
+    ]);
+
     return $result;
   }
 }

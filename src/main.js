@@ -8,6 +8,8 @@ import './scss/main.scss';
   'use strict';
 
   const AJAX_URL = CGC_PHP_DATA.ajax_url;
+  let downloadUrl = '';
+  let formFields = {};
 
   const alertRender = (content, type = 'info') => {
     return `<div class="clampdown-codes-alert clampdown-codes-alert__${ type }">
@@ -15,7 +17,7 @@ import './scss/main.scss';
     </div>`
   }
 
-  const updateResult = (result, $form) => {
+  const updateResult = (result, $form) => { 
     let $result = $form.parent().find('.clampdown-codes-donwload-form__result');
     let _html = alertRender(result.message, result.successful == true ? 'success' : 'error');
     $result.empty();
@@ -25,11 +27,13 @@ import './scss/main.scss';
       return;
     }
 
+    // result.download.download
+    const { code, group } = formFields
     let template = `<div class="__thumb">
       <img src="${ result.download.thumb }" alt="#" />
     </div>
-    <a href="${ result.download.download }" class="button">Download</a>`;
-
+    <a href="/?clampdown_codes_download=${ code }&__group=${ group }" target="_blank" id="BUTTON_DOWNLOAD_FILE" class="button">Download</a>`;
+    downloadUrl = result.download.download;
     _html += template;
 
     $result.html(_html);
@@ -48,6 +52,8 @@ import './scss/main.scss';
         return _new;
       }, {});
 
+      formFields = data;
+
       // console.log(data);
       const result = await $.ajax({
         method: 'POST',
@@ -62,7 +68,6 @@ import './scss/main.scss';
       })
 
       $buttonSubmit.removeClass('__ajax-handling');
-
       console.log(result);
       updateResult(result, $form);
     })
@@ -73,6 +78,12 @@ import './scss/main.scss';
     
     $('form.clampdown-code-download-form-control').each( function() {
       new validateFormHandling($(this));
+    })
+
+    $('body').on('click', '#BUTTON_DOWNLOAD_FILE', function() {
+      $('form.clampdown-code-download-form-control').find('[name=code]').val();
+      formFields = {};
+      $('.clampdown-codes-donwload-form__result').empty();
     })
   }
 
