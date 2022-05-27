@@ -18,7 +18,8 @@ class ClampdownCodesQuery {
 
   function __construct() {
     global $wpdb;
-    $this->_wpdb = $wpdb;
+    global $clampdown_codes_wpdbx;
+    $this->_wpdb = $clampdown_codes_wpdbx;
     $this->table_name = $wpdb->prefix . 'clampdown_codes';
   }
 
@@ -102,6 +103,10 @@ class ClampdownCodesQuery {
     ]);
 
     return $result;
+  }
+
+  public function insertMultiple($data = []) {
+    return $this->_wpdb->insert_multiple($this->table_name, $data);
   }
 }
 

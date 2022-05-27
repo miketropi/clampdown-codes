@@ -38,3 +38,15 @@ export const getDownloadConfig = async () => {
 export const updateDownloadConfig = async (config) => {
   return await appRequest('clampdown_codes_ajax_update_download_config', { ...config });
 }
+
+export const importData = async (data, group) => {
+  return await jQuery.ajax({
+    type: 'POST',
+    url: CGC_PHP_DATA.ajax_url,
+    data: {
+      action: 'clampdown_codes_ajax_import_data',
+      data,
+      group
+    },
+  })
+}

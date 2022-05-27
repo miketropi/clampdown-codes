@@ -116,3 +116,22 @@ function clampdown_codes_ajax_upload_file_import() {
 
 add_action('wp_ajax_clampdown_codes_ajax_upload_file_import', 'clampdown_codes_ajax_upload_file_import');
 add_action('wp_ajax_nopriv_clampdown_codes_ajax_upload_file_import', 'clampdown_codes_ajax_upload_file_import');
+
+function clampdown_codes_ajax_import_data() {
+  global $clampdownCodesQuery;
+  $group = $_POST['group'];
+  $data = array_map(function($item) use($group) {
+    return [
+      'code' => $item['Title'],
+      'group' => $group,
+      'metavalue' => '[]',
+      'time' => date('Y-m-d H:i:s', current_time('timestamp', 1)),
+    ];
+  }, $_POST['data']);
+  
+  $result = $clampdownCodesQuery->insertMultiple($data, $group);
+  echo $result; die;
+}
+
+add_action('wp_ajax_clampdown_codes_ajax_import_data', 'clampdown_codes_ajax_import_data');
+add_action('wp_ajax_nopriv_clampdown_codes_ajax_import_data', 'clampdown_codes_ajax_import_data');

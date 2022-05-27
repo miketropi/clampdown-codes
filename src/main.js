@@ -81,7 +81,7 @@ import './scss/main.scss';
     })
 
     $('body').on('click', '#BUTTON_DOWNLOAD_FILE', function() {
-      $('form.clampdown-code-download-form-control').find('[name=code]').val();
+      $('form.clampdown-code-download-form-control').find('input[name=code]').val('');
       formFields = {};
       $('.clampdown-codes-donwload-form__result').empty();
     })

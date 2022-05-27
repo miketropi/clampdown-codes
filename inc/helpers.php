@@ -81,4 +81,30 @@ add_action('init', function() {
   // $upload_dir = wp_upload_dir();
   // $entry = clampdown_codes_read_csv_file_to_json($upload_dir['basedir'] . '/2022/05/SameSideCodes.csv');
   // var_dump($entry);
+
+  // if(isset($_GET['test'])) {
+  //   global $clampdownCodesQuery;
+  //   $result = $clampdownCodesQuery->insertMultiple([
+  //     [
+  //       'code' => clampdown_codes_generate_random_string(6),
+  //       'group' => 'test',
+  //       'metavalue' => '{}',
+  //       'time' => date('Y-m-d H:i:s', current_time('timestamp', 1)),
+  //     ],
+  //     [
+  //       'code' => clampdown_codes_generate_random_string(6),
+  //       'group' => 'test',
+  //       'metavalue' => '{}',
+  //       'time' => date('Y-m-d H:i:s', current_time('timestamp', 1)),
+  //     ],
+  //     [
+  //       'code' => clampdown_codes_generate_random_string(6),
+  //       'group' => 'test',
+  //       'metavalue' => '{}',
+  //       'time' => date('Y-m-d H:i:s', current_time('timestamp', 1)),
+  //     ],
+  //   ]);
+
+  //   var_dump($result);
+  // }
 });
